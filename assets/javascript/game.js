@@ -19,11 +19,15 @@ var guessedLetter = ""; // variable that stores the player's last guess
 
 // functions the game will use:
 
-// updates the game win/loss count and num of guesses - will be called upon win or loss
+// updates the game win/loss count, # of guesses, player's guessed letters, and chooses a new letter - used on game start, win, and loss
 function updateGameScore() {
     document.getElementById("numGuessesLeft").innerHTML = guesses;
     document.getElementById("numWins").innerHTML = wins;
     document.getElementById("numLosses").innerHTML = losses;
+    document.getElementById("playerGuesses").innerHTML = guessedLetters;
+    // Initialize the game:  write code to randomly select a letter
+    chosenLetter = lettersArray[Math.floor(Math.random(1) * lettersArray.length)];
+    console.log("[info]: the game chose the letter " + chosenLetter);
 };
 
 // updates the number of guesses remaining and the guessed letters - will be called after each player guess
@@ -38,21 +42,35 @@ updateGameScore();
 
 // listen to keypress, convert it to lowercase, check it for validity, store it into guessedLetters array if valid
 
-// Initialize the game:  write code to randomly select a letter
-chosenLetter = lettersArray[Math.floor(Math.random(1) * lettersArray.length)];
-console.log("[info]: the game chose the letter " + chosenLetter);
-// ------------------------
-
 // listen for keypresses
 document.addEventListener('keypress', function(e) {
     // get the value of the key pressed and convert it to lower case
     guessedLetter = (e.key).toLowerCase();
     console.log("[info] keypress logged: " + guessedLetter);
-    // check keypress for validity before logging it
-    
-    // if the player's guess is a letter of the alphabet (contained in lettersArray) AND hasn't already been guessed, accept it
-    if (lettersArray.indexOf(guessedLetter) !== -1 && guessedLetters.indexOf(guessedLetter) === -1) {
+
+    // if the player sucessfully guesses the game's chosenLetter, reset # of guesses to 9, increment wins by 1, reset guessedLetters to an empty array
+    if (guessedLetter === chosenLetter) {
+        guesses = 9;
+        wins += 1;
+        guessedLetters = [];
+        updateGameScore();
+        console.log("[info]: Game reset due to win.")
+        }
+
+    // if the player runs out of guesses, reset # of guesses to 9, increment losses by 1, reset guessedLetters to an empty array
+    else if (guesses === 1) {
+        guesses = 9;
+        losses += 1;
+        guessedLetters = [];
+        updateGameScore();
+        console.log("[info] Game reset due to loss.")
+        }
+
+    // if the player's guess is a letter of the alphabet (contained in lettersArray) AND hasn't already been guessed, accept it and decrement guesses by 1
+    else if (lettersArray.indexOf(guessedLetter) !== -1 && guessedLetters.indexOf(guessedLetter) === -1) {
         guessedLetters.push(guessedLetter);
+        guesses -= 1;
+        updateGameState();
     }
 
     // if the player's guess isn't contained in lettersArray, tell them their guess isn't a letter and don't log it
@@ -61,22 +79,7 @@ document.addEventListener('keypress', function(e) {
     }
 
     // if the player has guessed a previously guessed letter, tell them they already guessed that and don't log it
-    else {
+    else if (guessedLetters.indexOf(guessedLetter) !== -1) {
         document.getElementById("errorReason").innerHTML = "You already guessed " + guessedLetter + "!";
     };
-    
-    console.log("guessedLetters contains: " + guessedLetters);
-    updateGameState();
-})
-// ------------------------
-
-// write code to record player guesses here
-// document.addEventListener("keypress", recordPlayerGuess);
-// recordPlayerGuess()
-
-
-// write code to decrement guesses here
-
-// write win/loss code here
-
-// write reset game on win/loss here
+});
