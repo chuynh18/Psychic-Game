@@ -65,7 +65,7 @@ beginNewRound();
 
 // the real meat of the core logic begins beneath here!
     // listen for keypresses
-document.addEventListener('keypress', function(e) {
+document.onkeyup = function(e) {
     // get the value of the key pressed (as opposed to the id of the key), convert it to lowercase, and store it in guessedLetter var
     guessedLetter = (e.key).toLowerCase();
     console.log("[info]: keypress logged: " + guessedLetter);
@@ -91,7 +91,6 @@ document.addEventListener('keypress', function(e) {
     else if (guessedLetters.indexOf(guessedLetter) !== -1) {
         // message to the player: how bad is your memory!?  short term memory isn't THAT short
         document.getElementById("errorReason").innerHTML = "You already guessed <b>" + guessedLetter + "</b>!";
-        // obnoxious blinking:  yellow
         blink(yellow, 3);
         console.log("[warn]: Player repeated a previously-guessed letter.")
     }
@@ -120,4 +119,4 @@ document.addEventListener('keypress', function(e) {
         console.log("[error]: Unknown error.  It should not be possible to trigger this.")
     };
 
-});
+};
