@@ -54,6 +54,7 @@ document.addEventListener('keypress', function(e) {
         wins += 1;
         guessedLetters = [];
         updateGameScore();
+        document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
         console.log("[info]: Game reset due to win.")
         }
 
@@ -63,6 +64,7 @@ document.addEventListener('keypress', function(e) {
         losses += 1;
         guessedLetters = [];
         updateGameScore();
+        document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
         console.log("[info] Game reset due to loss.")
         }
 
@@ -70,16 +72,17 @@ document.addEventListener('keypress', function(e) {
     else if (lettersArray.indexOf(guessedLetter) !== -1 && guessedLetters.indexOf(guessedLetter) === -1) {
         guessedLetters.push(guessedLetter);
         guesses -= 1;
+        document.getElementById("errorReason").innerHTML = "";
         updateGameState();
     }
 
     // if the player's guess isn't contained in lettersArray, tell them their guess isn't a letter and don't log it
     else if (lettersArray.indexOf(guessedLetter) === -1) {
-        document.getElementById("errorReason").innerHTML = guessedLetter + " is not a letter of the alphabet!";
+        document.getElementById("errorReason").innerHTML = "<b>" + guessedLetter + "</b> is not a letter of the alphabet!";
     }
 
     // if the player has guessed a previously guessed letter, tell them they already guessed that and don't log it
     else if (guessedLetters.indexOf(guessedLetter) !== -1) {
-        document.getElementById("errorReason").innerHTML = "You already guessed " + guessedLetter + "!";
+        document.getElementById("errorReason").innerHTML = "You already guessed <b>" + guessedLetter + "</b>!";
     };
 });
