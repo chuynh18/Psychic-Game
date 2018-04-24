@@ -37,12 +37,47 @@ function updateGameState() {
     document.getElementById("playerGuesses").innerHTML = guessedLetters;
 };
 
+// obnoxious blinking:  green
+function blinkGreen() {
+    for (i = 0; i < 5; i++) {
+        setTimeout(function(){
+        document.getElementById("theBody").style.backgroundColor = "#aaffaa";
+        }, 200 * i - 100);
+        setTimeout(function(){
+        document.getElementById("theBody").style.backgroundColor = "#ffffff";
+        }, 200 * i);
+    };
+};
+
+// obnoxious blinking:  red
+function blinkRed() {
+    for (i = 0; i < 5; i++) {
+        setTimeout(function(){
+        document.getElementById("theBody").style.backgroundColor = "#ffaaaa";
+        }, 200 * i - 100);
+        setTimeout(function(){
+        document.getElementById("theBody").style.backgroundColor = "#ffffff";
+        }, 200 * i);
+    };
+};
+
+// obnoxious blinking:  yellow
+function blinkYellow() {
+    for (i = 0; i < 5; i++) {
+        setTimeout(function(){
+        document.getElementById("theBody").style.backgroundColor = "#ffffaa";
+        }, 200 * i - 100);
+        setTimeout(function(){
+        document.getElementById("theBody").style.backgroundColor = "#ffffff";
+        }, 200 * i);
+    };
+};
+
 // Initialize the game:  call updateGameScore()
 updateGameScore();
 // ------------------------
 
-// listen to keypress, convert it to lowercase, check it for validity, store it into guessedLetters array if valid
-
+// the real meat of the core logic begins beneath here!
 // listen for keypresses
 document.addEventListener('keypress', function(e) {
     // get the value of the key pressed (as opposed to the id of the key), convert it to lowercase, and store it in guessedLetter var
@@ -56,15 +91,7 @@ document.addEventListener('keypress', function(e) {
         guessedLetters = [];
         updateGameScore();
         document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
-        // obnoxious blinking:  green
-        for (i = 0; i < 5; i++) {
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#aaffaa";
-            }, 200 * i - 100);
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffffff";
-            }, 200 * i);
-        };
+        blinkGreen();
         console.log("[info]: Game reset due to win.");
         }
 
@@ -75,15 +102,7 @@ document.addEventListener('keypress', function(e) {
         guessedLetters = [];
         updateGameScore();
         document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
-        // obnoxious blinking:  red
-        for (i = 0; i < 5; i++) {
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffaaaa";
-            }, 200 * i - 100);
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffffff";
-            }, 200 * i);
-        };
+        blinkRed();
         console.log("[info] Game reset due to loss.");
         }
 
@@ -99,15 +118,7 @@ document.addEventListener('keypress', function(e) {
     else if (lettersArray.indexOf(guessedLetter) === -1) {
         // message to the player: geez what were you thinking!  guess the LETTER, not the F key or number or something else
         document.getElementById("errorReason").innerHTML = "<b>" + guessedLetter + "</b> is not a letter of the (English) alphabet!";
-        // obnoxious blinking:  yellow
-        for (i = 0; i < 5; i++) {
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffffaa";
-            }, 200 * i - 100);
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffffff";
-            }, 200 * i);
-        };
+        blinkYellow();
         console.log("[info]: Player input something other than a letter.")
     }
 
@@ -116,14 +127,7 @@ document.addEventListener('keypress', function(e) {
         // message to the player: how bad is your memory!?  short term memory isn't THAT short
         document.getElementById("errorReason").innerHTML = "You already guessed <b>" + guessedLetter + "</b>!";
         // obnoxious blinking:  yellow
-        for (i = 0; i < 5; i++) {
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffffaa";
-            }, 200 * i - 100);
-            setTimeout(function(){
-            document.getElementById("theBody").style.backgroundColor = "#ffffff";
-            }, 200 * i);
-        };
+        blinkYellow();
         console.log("[info]: Player guessed a previously-guessed letter.")
     };
 });
