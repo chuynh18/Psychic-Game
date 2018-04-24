@@ -131,7 +131,7 @@ document.addEventListener('keypress', function(e) {
         console.log("[info] Game reset due to loss.");
         }
     
-    // closing off this huge if block with an else that logs to the console.  I believe I have accounted for all possibilities, but I'm putting this in here so I know I missed something if I see this dumped to the console.
+    // closing off this huge if/elif block with an else that logs to the console.  I believe I have accounted for all possibilities, but I'm putting this in here so I know I missed something if I see this dumped to the console.
     else {
         console.log("[error]: Unknown error.  It should not be possible to trigger this.")
     };
