@@ -1,4 +1,6 @@
+// strict is how I roll, baby
 "use strict";
+
 // HTML id names listed below for my own convenience
 
 // numWins = id of span to show number of wins player has in the current session
@@ -16,7 +18,6 @@ var lettersArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 
 var guessedLetters = []; // array that stores the player's guesses
 var guessedLetter = ""; // variable that stores the player's last guess
 var i = 0 // for the purposes of obnoxious blinking =)
-// ------------------------
 
 // functions the game will use:
 
@@ -75,7 +76,6 @@ function blinkYellow() {
 
 // Initialize the game:  call updateGameScore()
 updateGameScore();
-// ------------------------
 
 // the real meat of the core logic begins beneath here!
 // listen for keypresses
@@ -93,17 +93,6 @@ document.addEventListener('keypress', function(e) {
         document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
         blinkGreen();
         console.log("[info]: Game reset due to win.");
-        }
-
-    // if the player runs out of guesses, reset # of guesses to 9, increment losses by 1, reset guessedLetters to an empty array
-    else if (guesses === 1) {
-        guesses = 9;
-        losses += 1;
-        guessedLetters = [];
-        updateGameScore();
-        document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
-        blinkRed();
-        console.log("[info] Game reset due to loss.");
         }
 
     // if the player's guess is a letter of the alphabet (contained in lettersArray) AND hasn't already been guessed, accept it and decrement guesses by 1
@@ -129,5 +118,17 @@ document.addEventListener('keypress', function(e) {
         // obnoxious blinking:  yellow
         blinkYellow();
         console.log("[info]: Player guessed a previously-guessed letter.")
-    };
+    }
+
+    // if the player runs out of guesses, reset # of guesses to 9, increment losses by 1, reset guessedLetters to an empty array
+    else if (guesses === 1) {
+        guesses = 9;
+        losses += 1;
+        guessedLetters = [];
+        updateGameScore();
+        document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
+        blinkRed();
+        console.log("[info] Game reset due to loss.");
+        };
+
 });
