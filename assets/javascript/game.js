@@ -95,14 +95,6 @@ document.addEventListener('keypress', function(e) {
         console.log("[info]: Game reset due to win.");
         }
 
-    // if the player's guess is a letter of the alphabet (contained in lettersArray) AND hasn't already been guessed, accept it and decrement guesses by 1
-    else if (lettersArray.indexOf(guessedLetter) !== -1 && guessedLetters.indexOf(guessedLetter) === -1) {
-        guessedLetters.push(guessedLetter);
-        guesses -= 1;
-        document.getElementById("errorReason").innerHTML = "";
-        updateGameState();
-    }
-
     // if the player's guess isn't contained in lettersArray, tell them their guess isn't a letter and don't log it
     else if (lettersArray.indexOf(guessedLetter) === -1) {
         // message to the player: geez what were you thinking!  guess the LETTER, not the F key or number or something else
@@ -130,6 +122,14 @@ document.addEventListener('keypress', function(e) {
         blinkRed();
         console.log("[info] Game reset due to loss.");
         }
+
+    // if the player's guess is a letter of the alphabet (contained in lettersArray) AND hasn't already been guessed, accept it and decrement guesses by 1
+    else if (lettersArray.indexOf(guessedLetter) !== -1 && guessedLetters.indexOf(guessedLetter) === -1) {
+        guessedLetters.push(guessedLetter);
+        guesses -= 1;
+        document.getElementById("errorReason").innerHTML = "";
+        updateGameState();
+    }
     
     // closing off this huge if/elif block with an else that logs to the console.  I believe I have accounted for all possibilities, but I'm putting this in here so I know I missed something if I see this dumped to the console.
     else {
