@@ -109,7 +109,7 @@ document.onkeyup = function(e) {
         guessedLetters.push(guessedLetter);
         guesses--;
         // show nothing in the error "box"
-        document.getElementById("errorReason").innerHTML = "";
+        document.getElementById("errorReason").textContent = "";
         updateGuesses();
         blink(gray, 1);
     }
