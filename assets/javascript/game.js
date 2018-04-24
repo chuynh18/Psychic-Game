@@ -15,6 +15,7 @@ var losses = 0; // how many times the player has lost
 var lettersArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]; // array containing what this game considers to be valid letters
 var guessedLetters = []; // array that stores the player's guesses
 var guessedLetter = ""; // variable that stores the player's last guess
+var i = 0 // for the purposes of obnoxious blinking =)
 // ------------------------
 
 // functions the game will use:
@@ -44,7 +45,7 @@ updateGameScore();
 
 // listen for keypresses
 document.addEventListener('keypress', function(e) {
-    // get the value of the key pressed and convert it to lower case
+    // get the value of the key pressed (as opposed to the id of the key), convert it to lowercase, and store it in guessedLetter var
     guessedLetter = (e.key).toLowerCase();
     console.log("[info] keypress logged: " + guessedLetter);
 
@@ -55,7 +56,16 @@ document.addEventListener('keypress', function(e) {
         guessedLetters = [];
         updateGameScore();
         document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
-        console.log("[info]: Game reset due to win.")
+        // obnoxious blinking:  green
+        for (i = 0; i < 5; i++) {
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#aaffaa";
+            }, 200 * i - 100);
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffffff";
+            }, 200 * i);
+        };
+        console.log("[info]: Game reset due to win.");
         }
 
     // if the player runs out of guesses, reset # of guesses to 9, increment losses by 1, reset guessedLetters to an empty array
@@ -65,7 +75,16 @@ document.addEventListener('keypress', function(e) {
         guessedLetters = [];
         updateGameScore();
         document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
-        console.log("[info] Game reset due to loss.")
+        // obnoxious blinking:  red
+        for (i = 0; i < 5; i++) {
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffaaaa";
+            }, 200 * i - 100);
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffffff";
+            }, 200 * i);
+        };
+        console.log("[info] Game reset due to loss.");
         }
 
     // if the player's guess is a letter of the alphabet (contained in lettersArray) AND hasn't already been guessed, accept it and decrement guesses by 1
@@ -78,11 +97,33 @@ document.addEventListener('keypress', function(e) {
 
     // if the player's guess isn't contained in lettersArray, tell them their guess isn't a letter and don't log it
     else if (lettersArray.indexOf(guessedLetter) === -1) {
-        document.getElementById("errorReason").innerHTML = "<b>" + guessedLetter + "</b> is not a letter of the alphabet!";
+        // message to the player: geez what were you thinking!  guess the LETTER, not the F key or number or something else
+        document.getElementById("errorReason").innerHTML = "<b>" + guessedLetter + "</b> is not a letter of the (English) alphabet!";
+        // obnoxious blinking:  yellow
+        for (i = 0; i < 5; i++) {
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffffaa";
+            }, 200 * i - 100);
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffffff";
+            }, 200 * i);
+        };
+        console.log("[info]: Player input something other than a letter.")
     }
 
     // if the player has guessed a previously guessed letter, tell them they already guessed that and don't log it
     else if (guessedLetters.indexOf(guessedLetter) !== -1) {
+        // message to the player: how bad is your memory!?  short term memory isn't THAT short
         document.getElementById("errorReason").innerHTML = "You already guessed <b>" + guessedLetter + "</b>!";
+        // obnoxious blinking:  yellow
+        for (i = 0; i < 5; i++) {
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffffaa";
+            }, 200 * i - 100);
+            setTimeout(function(){
+            document.getElementById("theBody").style.backgroundColor = "#ffffff";
+            }, 200 * i);
+        };
+        console.log("[info]: Player guessed a previously-guessed letter.")
     };
 });
