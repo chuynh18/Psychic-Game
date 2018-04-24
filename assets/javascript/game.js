@@ -38,6 +38,12 @@ function updateGameState() {
     document.getElementById("playerGuesses").innerHTML = guessedLetters;
 };
 
+// reset guesses for new game
+function resetGuesses() {
+    guesses = 9;
+    guessedLetters = [];
+};
+
 // obnoxious blinking:  green
 function blinkGreen() {
     for (i = 0; i < 5; i++) {
@@ -86,12 +92,11 @@ document.addEventListener('keypress', function(e) {
 
     // if the player sucessfully guesses the game's chosenLetter, reset # of guesses to 9, increment wins by 1, reset guessedLetters to an empty array
     if (guessedLetter === chosenLetter) {
-        guesses = 9;
         wins += 1;
-        guessedLetters = [];
+        resetGuesses();
         updateGameScore();
-        document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
         blinkGreen();
+        document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
         console.log("[info]: Game reset due to win.");
         }
 
@@ -114,12 +119,11 @@ document.addEventListener('keypress', function(e) {
 
     // if the player runs out of guesses, reset # of guesses to 9, increment losses by 1, reset guessedLetters to an empty array
     else if (guesses === 1) {
-        guesses = 9;
         losses += 1;
-        guessedLetters = [];
+        resetGuesses();
         updateGameScore();
-        document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
         blinkRed();
+        document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
         console.log("[info] Game reset due to loss.");
         }
 
