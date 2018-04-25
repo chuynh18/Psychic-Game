@@ -42,13 +42,8 @@ function updateGuesses() {
     document.getElementById("playerGuesses").innerHTML = guessedLetters;
 };
 
-    // obnoxious blinking
-        // the colors I'll be using
-var green = "#aaffaa";
-var yellow = "#ffffaa";
-var red = "#ffaaaa";
-var gray= "#cccccc";
-        // the blink function itself
+    // obnoxious blinking function!  cause everyone loves this stuff.  hey, it's less bad than alerting...
+    // args are color (e.g. "red" or "#ff0000", same as html or css colors) and number of times to blink as an int (e.g. 1, 2, 3)
 function blink(color, reps) {
     for (var i = 0; i < reps+1; i++) {
         setTimeout(function(){
@@ -75,7 +70,7 @@ document.onkeyup = function(e) {
         wins++;
         console.log("[VICTORY]: Game reset due to win.");
         beginNewRound();
-        blink(green, 4);
+        blink("#aaffaa", 4);
         document.getElementById("errorReason").innerHTML = "You <b>won</b>!";
         }
 
@@ -83,7 +78,7 @@ document.onkeyup = function(e) {
     else if (lettersArray.indexOf(guessedLetter) === -1) {
         // message to the player: geez what were you thinking!  guess the LETTER, not the F key or number or something else
         document.getElementById("errorReason").innerHTML = "<b>" + guessedLetter + "</b> is not a letter of the (English) alphabet!";
-        blink(yellow, 3);
+        blink("#ffffaa", 3);
         console.log("[warn]: Player input something other than a letter.")
     }
 
@@ -91,7 +86,7 @@ document.onkeyup = function(e) {
     else if (guessedLetters.indexOf(guessedLetter) !== -1) {
         // message to the player: how bad is your memory!?  short term memory isn't THAT short
         document.getElementById("errorReason").innerHTML = "You already guessed <b>" + guessedLetter + "</b>!";
-        blink(yellow, 3);
+        blink("#ffffaa", 3);
         console.log("[warn]: Player repeated a previously-guessed letter.")
     }
 
@@ -100,7 +95,7 @@ document.onkeyup = function(e) {
         losses++;
         console.log("[DEFEAT]: Game reset due to loss.");
         beginNewRound();
-        blink(red, 4);
+        blink("#ffaaaa", 4);
         document.getElementById("errorReason").innerHTML = "You <b>lost</b>."
         }
 
@@ -111,7 +106,7 @@ document.onkeyup = function(e) {
         // show nothing in the error "box"
         document.getElementById("errorReason").textContent = "";
         updateGuesses();
-        blink(gray, 1);
+        blink("#cccccc", 1);
     }
     
     // closing off this huge if/elif block with an else that logs to the console.  I believe I have accounted for all possibilities, but I'm putting this in here so I know I missed something if I see this dumped to the console.
